@@ -1,1 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
+/lib
+/build
+/MyProject-20151123.jar
+/velocity.log
+/SalesforceMeta.iml
+/dist
+/out
+/.idea
