@@ -1,5 +1,9 @@
+IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = '${SchemaName}')
+    BEGIN
+        EXEC( 'CREATE SCHEMA ${SchemaName}' );
+    END
 CREATE TABLE ${SchemaName}.${EntityName}(
 #foreach($field in ${Fields})
-    $field.Name $field.Type #if(!$field.isNullable) NOT NULL #end #if($field.isPrimaryKey) PRIMARY KEY #end,
+    $field.Name $field.Type #if(!$field.isNullable()) NOT NULL #end#if(${field.isPrimaryKey()}) PRIMARY KEY #end,
 #end
 )

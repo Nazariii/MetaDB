@@ -9,8 +9,8 @@ public class Main {
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
         Manager manager = applicationContext.getBean(Manager.class);
         Entity entity = new Entity("Albums", "test");
-        entity.addField(Field.of("Title", "VARCHAR(MAX)", false, true));
-        entity.addField(Field.of("YEAR", "INT", false, false));
+        entity.addField(Field.of("Title", "VARCHAR(MAX)", true, true));
+        entity.addField(Field.of("YEAR", "INT", false, true));
         manager.create(entity);
     }
 }
