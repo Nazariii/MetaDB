@@ -1,5 +1,6 @@
 package com.company;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.context.Context;
@@ -25,6 +26,6 @@ public class QueryGenerator {
         context.put("SchemaName", entity.getSchemaName());
         context.put("Fields", entity.getFields());
         Velocity.mergeTemplate(templateDirectory + "create.vm", outputEncoding, context, stringWriter);
-        return stringWriter.toString();
+        return StringUtils.removeEnd(stringWriter.toString(), ",\r\n)").concat("\r\n)");
     }
 }
