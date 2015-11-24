@@ -6,6 +6,7 @@ public class Field {
     private Long length;
     private boolean isPrimaryKey;
     private boolean isNullable;
+    private boolean needProcessing;
 
     public Field(String name, SqlTypes type, Long length, boolean isPrimaryKey, boolean isNullable) {
         this.name = name;
@@ -13,10 +14,18 @@ public class Field {
         this.isPrimaryKey = isPrimaryKey;
         this.isNullable = isNullable;
         this.length = length;
-
+        this.needProcessing = true;
         if(!type.equals(SqlTypes.VARCHAR)){
             this.length = null; //nobody else can have length
         }
+    }
+
+    public boolean isNeedProcessing() {
+        return needProcessing;
+    }
+
+    public void setNeedProcessing(boolean needProcessing) {
+        this.needProcessing = needProcessing;
     }
 
     public Long getLength() {
@@ -25,6 +34,7 @@ public class Field {
 
     public void setLength(Long length) {
         this.length = length;
+        setNeedProcessing(true);
     }
 
     public String getName() {
@@ -33,6 +43,7 @@ public class Field {
 
     public void setName(String name) {
         this.name = name;
+        setNeedProcessing(true);
     }
 
     public SqlTypes getType() {
@@ -41,6 +52,7 @@ public class Field {
 
     public void setType(SqlTypes type) {
         this.type = type;
+        setNeedProcessing(true);
     }
 
     public boolean isPrimaryKey() {
@@ -48,7 +60,8 @@ public class Field {
     }
 
     public void setPrimaryKey(boolean primaryKey) {
-        isPrimaryKey = primaryKey;
+        this.isPrimaryKey = primaryKey;
+        setNeedProcessing(true);
     }
 
     public boolean isNullable() {
@@ -56,7 +69,9 @@ public class Field {
     }
 
     public void setNullable(boolean nullable) {
-        isNullable = nullable;
+        this.isNullable = nullable;
+        setNeedProcessing(true);
+
     }
 
     static class Builder {

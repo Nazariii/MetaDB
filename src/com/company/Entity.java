@@ -9,11 +9,20 @@ public class Entity {
     private String tableName;
     private List<Field> fieldList;
     private String schemaName;
+    private boolean needProcessing;
 
     public Entity(String tableName, String schemaName) {
         this.tableName = tableName;
         this.schemaName = schemaName;
         fieldList = new ArrayList<>();
+    }
+
+    public boolean isNeedProcessing() {
+        return needProcessing;
+    }
+
+    public void setNeedProcessing(boolean needProcessing) {
+        this.needProcessing = needProcessing;
     }
 
     public String getTableName() {
@@ -42,9 +51,11 @@ public class Entity {
 
     public void addField(Field field){
         fieldList.add(field);
+        setNeedProcessing(true);
     }
 
     public void addFields(Field... fields){
         Collections.addAll(fieldList, fields);
+        setNeedProcessing(true);
     }
 }

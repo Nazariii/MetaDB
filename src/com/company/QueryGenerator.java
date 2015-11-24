@@ -25,7 +25,7 @@ public class QueryGenerator {
         context.put("EntityName", entity.getTableName());
         context.put("SchemaName", entity.getSchemaName());
         context.put("Fields", entity.getFields());
-        Velocity.mergeTemplate(templateDirectory + "create.vm", outputEncoding, context, stringWriter);
+        Velocity.mergeTemplate(templateDirectory + "apply.vm", outputEncoding, context, stringWriter);
         return StringUtils.removeEnd(stringWriter.toString(), ",\r\n)").concat("\r\n)");
     }
 }
