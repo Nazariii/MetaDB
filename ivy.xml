@@ -14,15 +14,21 @@
         <dependency org="org.hibernate" name="hibernate-entitymanager" rev="5.0.4.Final"/>
         <dependency org="org.hibernate.javax.persistence" name="hibernate-jpa-2.1-api" rev="1.0.0.Final"/>
 
-        <!--<dependency org="junit" name="junit" rev="4.12"/>-->
+        <dependency org="junit" name="junit" rev="4.12"/>
 
         <dependency org="org.apache.commons" name="commons-lang3" rev="3.4"/>
-        <!--<dependency org="commons-io" name="commons-io" rev="2.4"/>-->
-        <!--<dependency org="com.google.guava" name="guava" rev="18.0"/>-->
+        <dependency org="commons-io" name="commons-io" rev="2.4"/>
+        <dependency org="com.google.guava" name="guava" rev="18.0"/>
+
+
+        <dependency org="javax.servlet" name="servlet-api" rev="2.3"/>
         <dependency org="org.apache.velocity" name="velocity" rev="1.7">
-            <exclude module="javax.persistence"/>
+            <exclude org="org.apache.openejb" module="javaee-api" />
+            <!--excluding this module because it is not needed and conflicts
+            with org.hibernate.javax.persistence-->
         </dependency>
-        <!--<dependency org="org.apache.logging.log4j" name="log4j-core" rev="2.4.1"/>-->
+        <exclude />
+
     </dependencies>
 
 </ivy-module>
