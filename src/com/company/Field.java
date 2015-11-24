@@ -2,17 +2,21 @@ package com.company;
 
 public class Field {
     private String name;
-    private String type;
+    private SqlTypes type;
     private Long length;
     private boolean isPrimaryKey;
     private boolean isNullable;
 
-    public Field(String name, String type, Long length, boolean isPrimaryKey, boolean isNullable) {
+    public Field(String name, SqlTypes type, Long length, boolean isPrimaryKey, boolean isNullable) {
         this.name = name;
         this.type = type;
         this.isPrimaryKey = isPrimaryKey;
         this.isNullable = isNullable;
         this.length = length;
+
+        if(!type.equals(SqlTypes.VARCHAR)){
+            this.length = null; //nobody else can have length
+        }
     }
 
     public Long getLength() {
@@ -31,11 +35,11 @@ public class Field {
         this.name = name;
     }
 
-    public String getType() {
+    public SqlTypes getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(SqlTypes type) {
         this.type = type;
     }
 
@@ -57,14 +61,14 @@ public class Field {
 
     static class Builder {
         private String name;
-        private String type;
+        private SqlTypes type;
         private boolean isPrimaryKey;
         private boolean isNullable;
         private Long length;
 
         public Builder(String name, SqlTypes type) {
             this.name = name;
-            this.type = type.toString();
+            this.type = type;
         }
 
         public Builder primaryKey(boolean value) {
