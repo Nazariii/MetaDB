@@ -3,44 +3,24 @@ package com.company;
 public class Field {
     private String name;
     private String type;
+    private Long length;
     private boolean isPrimaryKey;
     private boolean isNullable;
 
-    public Field(String name, String type, boolean isPrimaryKey, boolean isNullable) {
+    public Field(String name, String type, Long length, boolean isPrimaryKey, boolean isNullable) {
         this.name = name;
         this.type = type;
         this.isPrimaryKey = isPrimaryKey;
         this.isNullable = isNullable;
+        this.length = length;
     }
 
+    public Long getLength() {
+        return length;
+    }
 
-    static class Builder {
-        private String name;
-        private String type;
-        private boolean isPrimaryKey;
-        private boolean isNullable;
-
-
-        public Builder(String name, String type){
-            this.name = name;
-            this.type = type;
-        }
-
-        public Builder primaryKey(boolean value) {
-            this.isPrimaryKey = value;
-            return this;
-        }
-
-        public Builder nullable(boolean value) {
-            this.isNullable = value;
-            return this;
-        }
-
-        public Field build(){
-            return new Field(name,type,isPrimaryKey, isNullable);
-        }
-
-
+    public void setLength(Long length) {
+        this.length = length;
     }
 
     public String getName() {
@@ -73,5 +53,39 @@ public class Field {
 
     public void setNullable(boolean nullable) {
         isNullable = nullable;
+    }
+
+    static class Builder {
+        private String name;
+        private String type;
+        private boolean isPrimaryKey;
+        private boolean isNullable;
+        private Long length;
+
+        public Builder(String name, SqlTypes type) {
+            this.name = name;
+            this.type = type.toString();
+        }
+
+        public Builder primaryKey(boolean value) {
+            this.isPrimaryKey = value;
+            return this;
+        }
+
+        public Builder nullable(boolean value) {
+            this.isNullable = value;
+            return this;
+        }
+
+        public Builder length(long value) {
+            this.length = value;
+            return this;
+        }
+
+        public Field build() {
+            return new Field(name, type, length, isPrimaryKey, isNullable);
+        }
+
+
     }
 }
