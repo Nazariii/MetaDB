@@ -13,8 +13,34 @@ public class Field {
         this.isNullable = isNullable;
     }
 
-    public static Field of(String name, String type, boolean isPrimaryKey, boolean isNullable){
-        return new Field(name, type, isPrimaryKey, isNullable);
+
+    static class Builder {
+        private String name;
+        private String type;
+        private boolean isPrimaryKey;
+        private boolean isNullable;
+
+
+        public Builder(String name, String type){
+            this.name = name;
+            this.type = type;
+        }
+
+        public Builder primaryKey(boolean value) {
+            this.isPrimaryKey = value;
+            return this;
+        }
+
+        public Builder nullable(boolean value) {
+            this.isNullable = value;
+            return this;
+        }
+
+        public Field build(){
+            return new Field(name,type,isPrimaryKey, isNullable);
+        }
+
+
     }
 
     public String getName() {
