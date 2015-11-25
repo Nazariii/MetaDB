@@ -1,19 +1,33 @@
 package com.company;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+@javax.persistence.Entity
+@Table(name="Entity", schema="administration_metadata")
 public class Entity {
-    private String tableName;
+    @Id
+    @Column(name = "entity_name")
+    private String entityName;
+
+    @OneToMany(mappedBy="entityName")
     private List<Field> fieldList;
-    private String schemaName;
+
+    @Column(name= "name_of_schema")
+    private String nameOfSchema;
+
+    @Column(name="need_processing")
     private boolean needProcessing;
 
-    public Entity(String tableName, String schemaName) {
-        this.tableName = tableName;
-        this.schemaName = schemaName;
+    public Entity(String entityName, String nameOfSchema) {
+        this.entityName = entityName;
+        this.nameOfSchema = nameOfSchema;
         fieldList = new ArrayList<>();
     }
 
@@ -25,20 +39,20 @@ public class Entity {
         this.needProcessing = needProcessing;
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getEntityName() {
+        return entityName;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
     }
 
-    public String getSchemaName() {
-        return schemaName;
+    public String getNameOfSchema() {
+        return nameOfSchema;
     }
 
-    public void setSchemaName(String schemaName) {
-        this.schemaName = schemaName;
+    public void setNameOfSchema(String nameOfSchema) {
+        this.nameOfSchema = nameOfSchema;
     }
 
     public Iterable<Field> getFields(){

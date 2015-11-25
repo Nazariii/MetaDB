@@ -22,8 +22,8 @@ public class QueryGenerator {
 
         Context context = new VelocityContext();
         StringWriter stringWriter = new StringWriter();
-        context.put("EntityName", entity.getTableName());
-        context.put("SchemaName", entity.getSchemaName());
+        context.put("EntityName", entity.getEntityName());
+        context.put("SchemaName", entity.getNameOfSchema());
         context.put("Fields", entity.getFields());
         Velocity.mergeTemplate(templateDirectory + "apply.vm", outputEncoding, context, stringWriter);
         return StringUtils.removeEnd(stringWriter.toString(), ",\r\n)").concat("\r\n)");

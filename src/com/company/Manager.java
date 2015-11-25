@@ -26,4 +26,10 @@ public class Manager {
         int updatedCount = entityManager.createNativeQuery(tableCreationQuery).executeUpdate();
         return updatedCount;
     }
+
+    @Transactional
+    public void persist(Entity entity){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.persist(entity);
+    }
 }

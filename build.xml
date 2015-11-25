@@ -13,6 +13,7 @@
     <property name="template.dir" location="templates"/>
     <property name="properties.dir" location="properties"/>
     <property name="tomcat_dir" location="C:/apache-tomcat-8.0.28/webapps"/>
+    <property name="sql" location="src/sql"/>
 
     <path id="dep.runtime">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
@@ -71,6 +72,22 @@
         <copy todir=".">
             <fileset dir="dist"/>
         </copy>
+    </target>
+
+    <target name="database_scripts">
+        <sql driver="net.sourceforge.jtds.jdbc.Driver"
+             url="jdbc:jtds:sqlserver://localhost:1433;databaseName=test"
+             userid="nmeln"
+             password="Powerday9!"
+             print="TRUE"
+             classpathref="dep.runtime">
+            <path>
+            <fileset dir="${sql}">
+                <include name="field.sql"/>
+                <include name="entity.sql"/>
+            </fileset>
+            </path>
+        </sql>
     </target>
 
     <target name="clean"

@@ -1,11 +1,26 @@
 package com.company;
 
+import javax.persistence.*;
+
+@javax.persistence.Entity
+@Table(name="Field", schema="administration_metadata")
 public class Field {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @ManyToOne(targetEntity = Entity.class)
+    private String entityName;
+
     private String name;
+    @Enumerated(EnumType.STRING)
     private SqlTypes type;
     private Long length;
+    @Column(name = "is_primary_key")
     private boolean isPrimaryKey;
+    @Column(name = "is_nullable")
     private boolean isNullable;
+    @Column(name = "need_processing")
     private boolean needProcessing;
 
     public Field(String name, SqlTypes type, Long length, boolean isPrimaryKey, boolean isNullable) {
@@ -18,6 +33,10 @@ public class Field {
         if(!type.equals(SqlTypes.VARCHAR)){
             this.length = null; //nobody else can have length
         }
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public boolean isNeedProcessing() {

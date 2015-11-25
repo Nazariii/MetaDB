@@ -5,16 +5,26 @@
 
     <info organisation="org.nazar" module="velocity_test"/>
     <dependencies>
-        <dependency org="org.springframework" name="spring-core" rev="4.2.3.RELEASE"/>
-        <dependency org="org.springframework" name="spring-context" rev="4.2.3.RELEASE"/>
-        <dependency org="org.springframework" name="spring-jdbc" rev="4.2.3.RELEASE"/>
-        <dependency org="org.springframework" name="spring-orm" rev="4.2.3.RELEASE"/>
+        <dependency org="org.springframework" name="spring-core" rev="4.2.3.RELEASE">
+            <exclude org="org.apache.openejb" module="javaee-api" />
+        </dependency>
+        <dependency org="org.springframework" name="spring-context" rev="4.2.3.RELEASE">
+            <exclude org="org.apache.openejb" module="javaee-api" />
+        </dependency>
+        <dependency org="org.springframework" name="spring-jdbc" rev="4.2.3.RELEASE">
+            <exclude org="org.apache.openejb" module="javaee-api" />
+        </dependency>
+        <dependency org="org.springframework" name="spring-orm" rev="4.2.3.RELEASE">
+            <exclude org="org.apache.openejb" module="javaee-api" />
+        </dependency>
 
         <dependency org="org.hibernate" name="hibernate-core" rev="5.0.4.Final"/>
         <dependency org="org.hibernate" name="hibernate-entitymanager" rev="5.0.4.Final"/>
         <dependency org="org.hibernate.javax.persistence" name="hibernate-jpa-2.1-api" rev="1.0.0.Final"/>
 
         <dependency org="junit" name="junit" rev="4.12"/>
+
+        <dependency org="org.eclipse.persistence" name="javax.persistence" rev="2.1.0"/>
 
         <dependency org="org.apache.commons" name="commons-lang3" rev="3.4"/>
         <dependency org="commons-io" name="commons-io" rev="2.4"/>
