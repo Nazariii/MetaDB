@@ -5,21 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.*;
 
 @Service
 public class Manager {
 
-    @Autowired
-    private EntityManagerFactory entityManagerFactory;
+    @javax.persistence.PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     private QueryGenerator queryGenerator;
 
     @Transactional
     public int create(Entity entity){
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.joinTransaction();
         String tableCreationQuery = queryGenerator.generateQueryFrom(entity);
         System.out.println(tableCreationQuery);
@@ -29,7 +27,6 @@ public class Manager {
 
     @Transactional
     public void persist(Entity entity){
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.persist(entity);
+        entityManager.merge(entity);
     }
 }

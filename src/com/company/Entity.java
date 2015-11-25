@@ -1,24 +1,26 @@
 package com.company;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @javax.persistence.Entity
-@Table(name="Entity")
+@Table(name="core.Entity")
 public class Entity {
     @Id
-    @Column(name = "entity_name")
-    private String entityName;
+    @Column(name = "entity_id")
+    private String entityId;
 
-    @OneToMany
-    @JoinColumn(name="entity_name")
-    private List<Field> fieldList;
+    @OneToMany(
+            targetEntity = Field.class,
+            mappedBy = "entity",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<Field> fieldSet; //set
 
     @Column(name= "name_of_schema")
     private String nameOfSchema;
@@ -29,10 +31,10 @@ public class Entity {
     public Entity(){
     }
 
-    public Entity(String entityName, String nameOfSchema) {
-        this.entityName = entityName;
+    public Entity(String entityId, String nameOfSchema) {
+        this.entityId = entityId;
         this.nameOfSchema = nameOfSchema;
-        fieldList = new ArrayList<>();
+        fieldSet = new HashSet<>();
     }
 
     public boolean isNeedProcessing() {
@@ -43,12 +45,12 @@ public class Entity {
         this.needProcessing = needProcessing;
     }
 
-    public String getEntityName() {
-        return entityName;
+    public String getEntityId() {
+        return entityId;
     }
 
-    public void setEntityName(String entityName) {
-        this.entityName = entityName;
+    public void setEntityId(String entityId) {
+        this.entityId = entityId;
     }
 
     public String getNameOfSchema() {
@@ -60,20 +62,20 @@ public class Entity {
     }
 
     public Iterable<Field> getFields(){
-        return Collections.unmodifiableList(fieldList);
+        return Collections.unmodifiableSet(fieldSet);
     }
 
     public Stream<Field> getFieldsStream(){
-        return fieldList.stream();
+        return fieldSet.stream();
     }
 
     public void addField(Field field){
-        fieldList.add(field);
+        fieldSet.add(field);
         setNeedProcessing(true);
     }
 
     public void addFields(Field... fields){
-        Collections.addAll(fieldList, fields);
+        Collections.addAll(fieldSet, fields);
         setNeedProcessing(true);
     }
 }

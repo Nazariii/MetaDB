@@ -22,7 +22,7 @@ public class QueryGenerator {
 
         Context context = new VelocityContext();
         StringWriter stringWriter = new StringWriter();
-        context.put("EntityName", entity.getEntityName());
+        context.put("EntityName", entity.getEntityId());
         context.put("SchemaName", entity.getNameOfSchema());
         context.put("Fields", entity.getFields());
         Velocity.mergeTemplate(templateDirectory + "apply.vm", outputEncoding, context, stringWriter);

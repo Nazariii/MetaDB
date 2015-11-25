@@ -3,29 +3,45 @@ package com.company;
 import javax.persistence.*;
 
 @javax.persistence.Entity
-@Table(name="Field")
+@Table(name="core.Field")
 public class Field {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "field_id")
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name="entity_name", insertable=false, updatable=false)
+    public Entity getEntity() {
+        return entity;
+    }
+
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
+
+    @ManyToOne(targetEntity = Entity.class)
+    @JoinColumn(name = "entity_id", insertable = true, updatable = false)
     private Entity entity;
 
 
     private String name;
+
     @Enumerated(EnumType.STRING)
     private SqlTypes type;
+
+    @Column(name="length")
     private Integer length;
+
     @Column(name = "is_primary_key")
     private boolean isPrimaryKey;
+
     @Column(name = "is_nullable")
     private boolean isNullable;
+
     @Column(name = "need_processing")
     private boolean needProcessing;
+
     public Field(){
     }
+
     public Field(String name, SqlTypes type, Integer length, boolean isPrimaryKey, boolean isNullable) {
         this.name = name;
         this.type = type;
@@ -38,13 +54,7 @@ public class Field {
         }
     }
 
-    public Entity getEntity() {
-        return entity;
-    }
 
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
 
     public Integer getId() {
         return id;
