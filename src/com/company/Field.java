@@ -3,27 +3,30 @@ package com.company;
 import javax.persistence.*;
 
 @javax.persistence.Entity
-@Table(name="Field", schema="administration_metadata")
+@Table(name="Field")
 public class Field {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(targetEntity = Entity.class)
-    private String entityName;
+    @ManyToOne
+    @JoinColumn(name="entity_name", insertable=false, updatable=false)
+    private Entity entity;
+
 
     private String name;
     @Enumerated(EnumType.STRING)
     private SqlTypes type;
-    private Long length;
+    private Integer length;
     @Column(name = "is_primary_key")
     private boolean isPrimaryKey;
     @Column(name = "is_nullable")
     private boolean isNullable;
     @Column(name = "need_processing")
     private boolean needProcessing;
-
-    public Field(String name, SqlTypes type, Long length, boolean isPrimaryKey, boolean isNullable) {
+    public Field(){
+    }
+    public Field(String name, SqlTypes type, Integer length, boolean isPrimaryKey, boolean isNullable) {
         this.name = name;
         this.type = type;
         this.isPrimaryKey = isPrimaryKey;
@@ -33,6 +36,14 @@ public class Field {
         if(!type.equals(SqlTypes.VARCHAR)){
             this.length = null; //nobody else can have length
         }
+    }
+
+    public Entity getEntity() {
+        return entity;
+    }
+
+    public void setEntity(Entity entity) {
+        this.entity = entity;
     }
 
     public Integer getId() {
@@ -47,13 +58,12 @@ public class Field {
         this.needProcessing = needProcessing;
     }
 
-    public Long getLength() {
+    public Integer getLength() {
         return length;
     }
 
-    public void setLength(Long length) {
+    public void setLength(Integer length) {
         this.length = length;
-        setNeedProcessing(true);
     }
 
     public String getName() {
@@ -98,7 +108,7 @@ public class Field {
         private SqlTypes type;
         private boolean isPrimaryKey;
         private boolean isNullable;
-        private Long length;
+        private Integer length;
 
         public Builder(String name, SqlTypes type) {
             this.name = name;
@@ -115,7 +125,7 @@ public class Field {
             return this;
         }
 
-        public Builder length(long value) {
+        public Builder length(Integer value) {
             this.length = value;
             return this;
         }

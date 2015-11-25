@@ -10,7 +10,7 @@ CREATE TABLE [administration_metadata].Field(
   type VARCHAR(50) NOT NULL,
   is_primary_key BIT NOT NULL,
   is_nullable BIT NOT NULL,
-  needProcessing BIT NOT NULL,
-  length BIGINT,
+  need_processing BIT NOT NULL,
+  length INT,
   CONSTRAINT FK_entity FOREIGN KEY (entity_name) references [administration_metadata].Entity(entity_name)
 )
