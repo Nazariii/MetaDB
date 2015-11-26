@@ -63,7 +63,7 @@
         <javac srcdir="${src}" destdir="${build}" classpathref="compile.classpath"/>
     </target>
 
-    <target name="dist" depends="compile">
+    <target name="packjar" depends="compile">
         <mkdir dir="${dist}"/>
         <jar jarfile="${dist}/MyProject-${DSTAMP}.jar" basedir="${build}">
             <manifest>
@@ -73,7 +73,13 @@
         </jar>
     </target>
 
-    <target name="deploy" depends="dist, database_scripts">
+    <target name="packwar">
+        <war destfile="MyProject-${DSTAMP}.war" webxml="web.xml">
+            <metainf file="context.xml" />
+        </war>
+    </target>
+
+    <target name="deploy" depends="packwar, database_scripts">
         <copy todir="${app_root}/app/lib" flatten="false">
             <fileset dir="lib"/>
         </copy>
