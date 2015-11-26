@@ -6,13 +6,15 @@
     <taskdef resource="org/apache/ivy/ant/antlib.xml"
              uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
 
+    <property name="app_root" location="D:/SalesForceMeta"/>
+
     <property name="src" location="src"/>
     <property name="build" location="build"/>
     <property name="dist" location="dist"/>
     <property name="lib.dir" location="lib"/>
     <property name="template.dir" location="templates"/>
     <property name="properties.dir" location="properties"/>
-    <property name="tomcat_dir" location="C:/apache-tomcat-8.0.28/webapps"/>
+    <property name="tomcat_dir" location="${app_root}/prereqs/tomcat/webapp/apache-tomcat-8.0.28/webapps"/>
     <property name="sql" location="src/sql"/>
 
     <path id="dep.runtime">
@@ -52,26 +54,31 @@
         </jar>
     </target>
 
-    <target name="deploy" depends="dist">
-        <copy todir="${tomcat_dir}/myapp/lib" flatten="false">
+    <target name="deploy" depends="dist, database_scripts">
+        <copy todir="${app_root}/app/lib" flatten="false">
             <fileset dir="lib"/>
         </copy>
 
-        <copy todir="${tomcat_dir}/myapp" flatten="false">
+        <copy todir="${app_root}/app" flatten="false">
             <fileset dir="dist"/>
         </copy>
 
-        <copy todir="${tomcat_dir}/myapp/properties" flatten="false">
+        <copy todir="${app_root}/app/properties" flatten="false">
             <fileset dir="properties"/>
         </copy>
 
-        <copy todir="${tomcat_dir}/myapp/templates" flatten="false">
+        <copy todir="${app_root}/app/templates" flatten="false">
             <fileset dir="templates"/>
         </copy>
 
         <copy todir=".">
             <fileset dir="dist"/>
         </copy>
+
+        <copy todir="${tomcat_dir}">
+            <fileset dir="dist"/>
+        </copy>
+
     </target>
 
     <target name="database_scripts">
@@ -99,7 +106,7 @@
         <delete dir="${dist}"/>
     </target>
 
-    <target name="clean-all" depends="clean" description="Purge ivy cache">
+    <target name="clean-cache" depends="clean" description="Purge ivy cache">
         <ivy:cleancache/>
     </target>
 </project>
