@@ -6,8 +6,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @ComponentScan("com.company")
-@PropertySource("classpath:output.properties")
-@PropertySource("classpath:velocity.properties")
+@PropertySource("classpath:/output.properties")
+@PropertySource("classpath:/velocity.properties")
 public class AppConfig {
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {

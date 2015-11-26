@@ -19,7 +19,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:database.properties")
+@PropertySource("classpath:/database.properties")
 public class PersistenceContext {
 
     @Autowired

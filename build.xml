@@ -17,11 +17,33 @@
     <property name="tomcat_dir" location="${app_root}/prereqs/tomcat/webapp/apache-tomcat-8.0.28/webapps"/>
     <property name="sql" location="src/sql"/>
 
-    <path id="dep.runtime">
-        <fileset dir="${lib.dir}" includes="**/*.jar"/>
-        <!--<fileset dir="${template.dir}" includes="**/*.vm"/>-->
-        <fileset dir="${properties.dir}" includes="**/*.properties"/>
-    </path>
+
+
+    <pathconvert property="manifest.classpath" pathsep=" ">
+        <!--<fileset dir="${lib.dir}" includes="**/*.jar"/>-->
+        <!--&lt;!&ndash;<fileset dir="${template.dir}" includes="**/*.vm"/>&ndash;&gt;-->
+        <!--<fileset dir="${properties.dir}" includes="**/*.properties"/>-->
+
+        <path id="compile.classpath">
+            <fileset dir="lib">
+                <include name="*.jar"/>
+            </fileset>
+            <fileset dir="properties">
+                <include name="*.properties"/>
+            </fileset>
+        </path>
+
+        <mapper>
+            <chainedmapper>
+                <flattenmapper/>
+                <globmapper from="*.jar" to="lib/*.jar"/>
+            </chainedmapper>
+            <chainedmapper>
+                <flattenmapper/>
+                <globmapper from="*.properties" to="properties/"/>
+            </chainedmapper>
+        </mapper>
+    </pathconvert>
 
     <target name="init">
         <tstamp/>
@@ -38,18 +60,15 @@
     </target>
 
     <target name="compile" depends="init, retrieve-default">
-        <javac srcdir="${src}" destdir="${build}" classpathref="dep.runtime"/>
+        <javac srcdir="${src}" destdir="${build}" classpathref="compile.classpath"/>
     </target>
 
     <target name="dist" depends="compile">
         <mkdir dir="${dist}"/>
-        <manifestclasspath property="manifest_cp" jarfile="MyProject-${DSTAMP}.jar">
-            <classpath refid="dep.runtime"/>
-        </manifestclasspath>
         <jar jarfile="${dist}/MyProject-${DSTAMP}.jar" basedir="${build}">
             <manifest>
                 <attribute name="Main-Class" value="com.company.Main"/>
-                <attribute name="Class-Path" value="${manifest_cp}"/>
+                <attribute name="Class-Path" value="${manifest.classpath}"/>
             </manifest>
         </jar>
     </target>
@@ -87,7 +106,7 @@
              userid="nmeln"
              password="Powerday9!"
              print="TRUE"
-             classpathref="dep.runtime"
+             classpathref="compile.classpath"
              onerror="continue"
         delimiter=";">
             <path>

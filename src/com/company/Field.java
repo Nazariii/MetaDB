@@ -22,8 +22,8 @@ public class Field {
     @JoinColumn(name = "entity_id", insertable = true, updatable = false)
     private Entity entity;
 
-
-    private String name;
+    @Column(name="field_name")
+    private String fieldName;
 
     @Enumerated(EnumType.STRING)
     private SqlTypes type;
@@ -43,8 +43,8 @@ public class Field {
     public Field(){
     }
 
-    public Field(String name, SqlTypes type, Integer length, boolean isPrimaryKey, boolean isNullable) {
-        this.name = name;
+    public Field(String fieldName, SqlTypes type, Integer length, boolean isPrimaryKey, boolean isNullable) {
+        this.fieldName = fieldName;
         this.type = type;
         this.isPrimaryKey = isPrimaryKey;
         this.isNullable = isNullable;
@@ -77,12 +77,12 @@ public class Field {
         this.length = length;
     }
 
-    public String getName() {
-        return name;
+    public String getFieldName() {
+        return fieldName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String fieldName) {
+        this.fieldName = fieldName;
         setNeedProcessing(true);
     }
 
