@@ -6,8 +6,9 @@ import javax.persistence.*;
 @Table(name="core.Field")
 public class Field {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "field_id")
-    private Integer id;
+    private Long id;
 
     public Entity getEntity() {
         return entity;
@@ -56,7 +57,7 @@ public class Field {
 
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
