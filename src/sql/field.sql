@@ -1,10 +1,7 @@
-use fresh
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = 'core')
-  BEGIN
-    EXEC( 'CREATE SCHEMA core' );
-  END
-GO
+use fresh;
+
+EXEC( 'CREATE SCHEMA core' );
+
 CREATE TABLE core.Field(
   Field_id NUMERIC(19, 0) IDENTITY NOT NULL,
   entity_id NUMERIC(19, 0) NOT NULL,
@@ -16,5 +13,4 @@ CREATE TABLE core.Field(
   length INT,
   CONSTRAINT PK_FIELD PRIMARY KEY (Field_Id),
   CONSTRAINT FK_ENTITY FOREIGN KEY (entity_id) references core.Entity(entity_id)
-)
-GO
+);

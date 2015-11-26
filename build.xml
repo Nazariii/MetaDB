@@ -80,7 +80,9 @@
              userid="nmeln"
              password="Powerday9!"
              print="TRUE"
-             classpathref="dep.runtime">
+             classpathref="dep.runtime"
+             onerror="continue"
+        delimiter=";">
             <path>
             <fileset dir="${sql}">
                 <include name="field.sql"/>
