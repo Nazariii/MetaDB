@@ -74,8 +74,14 @@
     </target>
 
     <target name="packwar">
-        <war destfile="MyProject-${DSTAMP}.war" webxml="web.xml">
+        <war destfile="war/SalesforceMeta.war" webxml="web/WEB-INF/web.xml">
             <metainf file="context.xml" />
+            <fileset dir="jsp">
+                <include name="**/*.jsp"/>
+            </fileset>
+            <fileset dir="jsp/images">
+                <include name="*.jpg"/>
+            </fileset>
         </war>
     </target>
 
@@ -101,7 +107,7 @@
         </copy>
 
         <copy todir="${tomcat_dir}">
-            <fileset dir="dist"/>
+            <fileset dir="war"/>
         </copy>
 
     </target>

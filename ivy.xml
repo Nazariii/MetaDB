@@ -18,6 +18,9 @@
             <exclude org="org.apache.openejb" module="javaee-api" />
         </dependency>
 
+        <dependency org="org.springframework" name="spring-webmvc" rev="4.2.3.RELEASE"/>
+
+
         <dependency org="org.hibernate" name="hibernate-core" rev="5.0.4.Final"/>
         <dependency org="org.hibernate" name="hibernate-entitymanager" rev="5.0.4.Final"/>
         <dependency org="org.hibernate.javax.persistence" name="hibernate-jpa-2.1-api" rev="1.0.0.Final"/>
