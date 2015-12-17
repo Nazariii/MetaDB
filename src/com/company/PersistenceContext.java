@@ -1,5 +1,6 @@
 package com.company;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,10 +18,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:/database.properties")
 public class PersistenceContext {
+    final static Logger logger = Logger.getLogger(PersistenceContext.class);
 
     @Autowired
     public Environment env;
@@ -31,6 +34,8 @@ public class PersistenceContext {
         dataSource.setUrl(env.getProperty("jdbc.url"));
         dataSource.setUsername(env.getProperty("jdbc.username"));
         dataSource.setPassword(env.getProperty("jdbc.password"));
+        logger.info("yess");
+        dataSource.setDriverClassName("net.sourceforge.jtds.jdbc.Driver");
         return  dataSource;
     }
 

@@ -10,6 +10,6 @@
         <PreResources className="org.apache.catalina.webresources.DirResourceSet"
                       base="D:/SalesForceMeta/app/properties"
                       internalPath="/"
-                      webAppMount="/WEB-INF/class/properties" />
+                      webAppMount="/WEB-INF/classes" />
     </Resources>
 </Context>

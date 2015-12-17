@@ -11,52 +11,51 @@
     <property name="src" location="src"/>
     <property name="build" location="build"/>
     <property name="dist" location="dist"/>
-    <property name="lib.dir" location="lib"/>
+    <property name="libs" location="lib"/>
     <property name="template.dir" location="templates"/>
     <property name="properties.dir" location="properties"/>
-    <property name="tomcat_dir" location="${app_root}/prereqs/tomcat/webapp/apache-tomcat-8.0.28/webapps"/>
+    <property name="tomcat_dir" location="${app_root}/prereqs/tomcat/webapp/apache-tomcat-8.0.30"/>
+    <property name="webpapps_dir" location="${tomcat_dir}/webapps"/>
     <property name="sql" location="src/sql"/>
 
 
 
-    <pathconvert property="manifest.classpath" pathsep=" ">
-        <!--<fileset dir="${lib.dir}" includes="**/*.jar"/>-->
-        <!--&lt;!&ndash;<fileset dir="${template.dir}" includes="**/*.vm"/>&ndash;&gt;-->
-        <!--<fileset dir="${properties.dir}" includes="**/*.properties"/>-->
 
-        <path id="compile.classpath">
-            <fileset dir="lib">
-                <include name="*.jar"/>
-            </fileset>
-            <fileset dir="properties">
-                <include name="*.properties"/>
-            </fileset>
-        </path>
 
-        <mapper>
-            <chainedmapper>
-                <flattenmapper/>
-                <globmapper from="*.jar" to="lib/*.jar"/>
-            </chainedmapper>
-            <chainedmapper>
-                <flattenmapper/>
-                <globmapper from="*.properties" to="properties/"/>
-            </chainedmapper>
-        </mapper>
-    </pathconvert>
-
-    <target name="init">
+    <target name="init" depends="clean">
         <tstamp/>
         <mkdir dir="${build}"/>
+        <mkdir dir="${libs}"/>
     </target>
 
-    <target name="resolve">
+    <target name="resolve" depends="init">
         <ivy:configure/>
         <ivy:resolve file="ivy.xml" conf="default"/>
     </target>
 
     <target name="retrieve-default" depends="resolve">
         <ivy:retrieve pattern="lib/[artifact]-[type]-[revision].[ext]" conf="default"/>
+        <pathconvert property="manifest.classpath" pathsep=" ">
+            <path id="compile.classpath">
+                <fileset dir="lib">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="properties">
+                    <include name="*.properties"/>
+                </fileset>
+            </path>
+
+            <mapper>
+                <chainedmapper>
+                    <flattenmapper/>
+                    <globmapper from="*.jar" to="lib/*.jar"/>
+                </chainedmapper>
+                <chainedmapper>
+                    <flattenmapper/>
+                    <globmapper from="*.properties" to="*.properties"/>
+                </chainedmapper>
+            </mapper>
+        </pathconvert>
     </target>
 
     <target name="compile" depends="init, retrieve-default">
@@ -73,7 +72,7 @@
         </jar>
     </target>
 
-    <target name="packwar">
+    <target name="packwar" depends="packjar">
         <war destfile="war/SalesforceMeta.war" webxml="web/WEB-INF/web.xml">
             <metainf file="context.xml" />
             <fileset dir="jsp">
@@ -90,7 +89,7 @@
             <fileset dir="lib"/>
         </copy>
 
-        <copy todir="${app_root}/app" flatten="false">
+        <copy todir="${app_root}/app/lib" flatten="false">
             <fileset dir="dist"/>
         </copy>
 
@@ -106,10 +105,15 @@
             <fileset dir="dist"/>
         </copy>
 
-        <copy todir="${tomcat_dir}">
+        <copy todir="${webpapps_dir}">
             <fileset dir="war"/>
         </copy>
 
+
+        <!--jtds driver-->
+        <copy todir="${tomcat_dir}/lib">
+           <file file="lib/jtds-jar-1.3.1.jar"/>
+        </copy>
     </target>
 
     <target name="database_scripts">
@@ -133,6 +137,10 @@
     <target name="clean"
             description="clean up">
         <!-- Delete the ${build} and ${dist} directory trees -->
+
+        <delete>
+            <fileset dir="${app_root}/app/lib" />
+        </delete>
         <delete dir="${build}"/>
         <delete dir="${dist}"/>
     </target>
