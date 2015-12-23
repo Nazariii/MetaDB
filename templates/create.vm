@@ -1,0 +1,9 @@
+CREATE PROCEDURE ${SchemaName}.create${EntityName}
+AS
+BEGIN
+CREATE TABLE ${SchemaName}.${EntityName}(
+#foreach($field in ${Fields})
+    $field.fieldName ${field.Type}#if(${field.Length})(${field.Length})#end #if(!$field.isNullable())NOT NULL#end#if(${field.isPrimaryKey()}) PRIMARY KEY#end,
+#end
+)
+END

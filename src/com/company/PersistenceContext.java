@@ -23,7 +23,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource("classpath:/database.properties")
 public class PersistenceContext {
-    final static Logger logger = Logger.getLogger(PersistenceContext.class);
+    private final static Logger logger = Logger.getLogger(PersistenceContext.class);
 
     @Autowired
     public Environment env;
