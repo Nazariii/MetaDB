@@ -1,5 +1,6 @@
 package com.company;
 
+import org.apache.commons.cli.Option;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -38,8 +39,7 @@ public class QueryGenerator {
 
         Velocity.mergeTemplate("create.vm", outputEncoding, context, stringWriter);
 
-        Pair<String, String> resultPair = new ImmutablePair<>("create" + entity.getEntityName(), stringWriter.toString());
-        return resultPair;
+        return new ImmutablePair<>("create" + entity.getEntityName(), stringWriter.toString());
     }
 
 }

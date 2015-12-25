@@ -11,5 +11,10 @@
                       base="D:/SalesForceMeta/app/properties"
                       internalPath="/"
                       webAppMount="/WEB-INF/classes" />
+
+        <PreResources className="org.apache.catalina.webresources.DirResourceSet"
+                      base="D:/SalesForceMeta/app/MyProject.jar"
+                      internalPath="/"
+                      webAppMount="/WEB-INF/lib/MyProject.jar" />
     </Resources>
 </Context>

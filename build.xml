@@ -52,7 +52,7 @@
                 </chainedmapper>
                 <chainedmapper>
                     <flattenmapper/>
-                    <globmapper from="*.properties" to="*.properties"/>
+                    <globmapper from="*.properties" to="properties/"/>
                 </chainedmapper>
             </mapper>
         </pathconvert>
@@ -64,7 +64,7 @@
 
     <target name="packjar" depends="compile">
         <mkdir dir="${dist}"/>
-        <jar jarfile="${dist}/MyProject-${DSTAMP}.jar" basedir="${build}">
+        <jar jarfile="${dist}/MyProject.jar" basedir="${build}">
             <manifest>
                 <attribute name="Main-Class" value="com.company.Main"/>
                 <attribute name="Class-Path" value="${manifest.classpath}"/>
@@ -89,7 +89,7 @@
             <fileset dir="lib"/>
         </copy>
 
-        <copy todir="${app_root}/app/lib" flatten="false">
+        <copy todir="${app_root}/app/" flatten="false">
             <fileset dir="dist"/>
         </copy>
 
